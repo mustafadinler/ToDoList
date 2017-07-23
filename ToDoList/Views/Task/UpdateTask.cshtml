@@ -1,0 +1,44 @@
+﻿@model ToDoList.Models.Task
+@{
+    ViewBag.Title = "UpdateTask";
+
+}
+
+<div style="height:20px"></div>
+
+<table class="table table-striped table-bordered">
+    <tbody>
+        <tr>
+            <td>Task Content:</td>
+            <td><input type="text" id="TaskBody" name="TaskBody" value="@Model.Body" /></td>
+        </tr>
+    </tbody>
+</table>
+<div>
+    <button type="button" class="btn btn-info btn-lg" name="SaveTask" id="SaveTask">SAVE TASK</button>
+</div>
+<script>
+       $(document).ready(function () {
+        $("#SaveTask").click(function () {
+            var Task = {
+                Id:@Model.Id,
+                Body: TaskBody.value
+            };
+            var Data = JSON.stringify(Task);
+            $.ajax({
+                type: "POST",
+                url: "/Task/UpdateTask",
+                contentType: "application/json; charset=utf-8",
+
+                data: Data,
+                dataType: "json",
+                success: function (data) {
+                    window.location.href=data;
+                },
+                error: function (data) {
+                }
+
+            });
+        });
+       });
+</script>

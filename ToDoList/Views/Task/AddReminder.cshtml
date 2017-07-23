@@ -1,0 +1,50 @@
+﻿@model ToDoList.Models.Task
+@{
+    ViewBag.Title = "AddReminder";
+
+}
+
+<div style="height:20px"></div>
+<h2>Task Id: @Model.Id</h2>
+<table class="table table-striped table-bordered">
+    <tbody>
+        <tr>
+            <td>Select Date:</td>
+            <td><input type="datetime-local" id="DateTime" name="DateTime" /></td>
+        </tr>
+        <tr>
+            <td>To Email:</td>
+            <td><input type="email" id="Email" name="Email" value="" /></td>
+        </tr>
+    </tbody>
+</table>
+<div>
+    <button type="button" class="btn btn-info btn-lg" name="AddReminder" id="AddReminder">ADD REMINDER</button>
+</div>
+<script>
+       $(document).ready(function () {
+           $("#AddReminder").click(function () {
+            var EmailNotificationModel = {
+                TaskId:@Model.Id,
+                EmailAddress: Email.value,
+                NotificationTime: DateTime.value,
+                TaskBody:"@Model.Body"
+            };
+            var Data = JSON.stringify(EmailNotificationModel);
+            $.ajax({
+                type: "POST",
+                url: "/Task/AddReminder",
+                contentType: "application/json; charset=utf-8",
+
+                data: Data,
+                dataType: "json",
+                success: function (data) {
+                    window.location.href=data;
+                },
+                error: function (data) {
+                }
+
+            });
+        });
+       });
+</script>
